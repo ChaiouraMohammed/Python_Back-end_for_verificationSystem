@@ -10,6 +10,43 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 ```
+## Function to get a random numerical characters
+
+```
+def generateCode():
+  return str(random.randint(100000 , 999999))
+```
+## Function to send mails 
+```
+def send_email(receiver_email, verification_code):
+    sender_email = "YourCompanyMail" 
+    password = "PasswordCompanyMail"  
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = receiver_email
+    message['Subject'] = "Code de vérification"
+
+    body = f"Votre code de vérification est : {verification_code}"
+    message.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, password)
+    server.send_message(message)
+    server.quit()
+```
+## Main program
+```
+email = input("Entrez votre adresse e-mail : ")
+code = generateCode()
+send_email(email, code)
+print("Un e-mail de vérification a été envoyé à votre adresse.")
+userInput = input("Entrez le code de vérification reçu par e-mail : ")
+if userInput == code:
+     print("Code correct. Vérification réussie !")
+else:
+     print("Code incorrect. Vérification échouée.")
+```
 ## Outcomes 
 ![image](https://github.com/ChaiouraMohammed/Python_Back-end_for_verificationSystem/assets/91562298/a1dbbcd1-227a-412c-bdc9-aefb175bf807)
 
